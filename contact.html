@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us | SmartStore</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="logo">🛍️ Brahmani General Store</div>
+    <button class="hamburger" aria-label="Toggle navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <ul class="title">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="Weight Gain Products.html">Weight Gain Products</a></li>
+      <li><a href="grocery.html">Grocery</a></li>
+      <li><a href="numkin.html">Numkeen</a></li>
+      <li><a href="stationary.html">Stationary</a></li>
+      <li><a href="other.html">Other Products</a></li>
+      <li><a href="Soap_&_detergent.html">Soap & Detergent</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+  
+  <section>
+    <div class="hero1">
+      <h1 class="hero-title">Contact Us</h1>
+      <p class="hero-subtitle">
+        Get in Touch with Brahmani General Store
+      </p>
+    </div>
+
+    <div class="contact-container">
+      <!-- Contact Information -->
+      <div class="contact-info">
+        <div class="info-card">
+          <h3>📍 Address</h3>
+          <p>Brahmani General Store<br>Near by ice factory<br>Palanpur, Gujarat 385001<br>India</p>
+        </div>
+        
+        <div class="info-card">
+          <h3>📞 Phone</h3>
+          <p>Customer Support: +91 [9925078686]<br>Business: +91 [9016626581]<br>Monday - Sunday, 8AM - 8PM</p>
+        </div>
+        
+        <div class="info-card">
+          <h3>✉️ Email</h3>
+          <p>Support: prajapatiumang000@gmail.com<br>Sales: prajapatiumang9999@gmail.com<br></p>
+        </div>
+        
+        <div class="info-card">
+          <h3>🕒 Business Hours</h3>
+          <p>Monday - Sunday, 8:00AM - 8:00PM<br>Sunday: 8:00AM to 12:00PM</p>
+        </div>
+      </div>
+      
+      <!-- Contact Form -->
+      <div class="contact-form">
+        <h3 style="color: #00f5ff; margin-bottom: 25px;">Send us a Message</h3>
+        <div id="formMessage"></div>
+        <form id="contactForm">
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" placeholder="What is this about?" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Write your message here..." rows="6" required></textarea>
+          </div>
+          
+          <button type="submit" class="btn" id="submitBtn">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+  
+  <footer>
+    [20 Year Old] Brahmani General Store | Your Trusted Destination
+  </footer>
+
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const subject = document.getElementById('subject').value;
+      const message = document.getElementById('message').value;
+      const submitBtn = document.getElementById('submitBtn');
+      const formMessage = document.getElementById('formMessage');
+      
+      // Disable button and show loading state
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      formMessage.innerHTML = '';
+      
+      // Create FormData object
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('email', email);
+      formData.append('subject', subject);
+      formData.append('message', message);
+      
+      // Send form via AJAX to Formspree (replace YOUR_FORM_ID with actual ID from formspree.io)
+      fetch('https://formspree.io/f/YOUR_FORM_ID', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Network response was not ok');
+        }
+      })
+      .then(data => {
+        formMessage.innerHTML = '<div style="padding: 15px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 4px; margin-bottom: 20px;"><strong>Success!</strong> Your message has been sent successfully!</div>';
+        document.getElementById('contactForm').reset();
+        submitBtn.textContent = 'Send Message';
+        submitBtn.disabled = false;
+      })
+      .catch(error => {
+        formMessage.innerHTML = '<div style="padding: 15px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; border-radius: 4px; margin-bottom: 20px;"><strong>Error!</strong> Something went wrong. Please try again.</div>';
+        submitBtn.textContent = 'Send Message';
+        submitBtn.disabled = false;
+        console.error('Error:', error);
+      });
+    });
+  </script>
+</body>
+</html>
